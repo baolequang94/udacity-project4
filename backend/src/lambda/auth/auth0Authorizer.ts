@@ -58,6 +58,8 @@ async function verifyToken(authHeader: string): Promise<JwtPayload> {
   const token = getToken(authHeader)
   const jwt: Jwt = decode(token, { complete: true }) as Jwt
 
+  console.log(jwt)
+
   const reponse = await Axios.get(jwksUrl)
   const JWTKey = reponse.data.keys.find((key) => (key.kid = jwt.header.kid))
     ?.x5c?.[0]
