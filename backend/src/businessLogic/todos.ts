@@ -19,13 +19,12 @@ export async function createTodo(
   const todoId = uuid.v4()
   const createdAt = new Date().toISOString()
   const done = false
-  const attachmentUrl = attachmentUtils.getAttachmentUrl(todoId)
+
   const newTodo: TodoItem = {
     todoId,
     userId,
     createdAt,
     done,
-    attachmentUrl,
     ...newTodoData
   }
   return todoAccess.createTodo(newTodo)
@@ -50,6 +49,8 @@ export async function createAttachmentPresignedUrl(
   userId: string,
   todoId: string
 ): Promise<string> {
+  const attachmentUrl = attachmentUtils.getAttachmentUrl(todoId)
+  await todoAccess.saveImgUrl(userId, todoId, attachmentUrl)
   console.log(`createSignedUrl ${todoId}`, userId)
   return attachmentUtils.getUploadUrl(todoId)
 }
