@@ -17,7 +17,7 @@ export const handler = middy(
     const userId = getUserId(event)
 
     try {
-      const newItem = createTodo(userId, newTodo)
+      const newItem = await createTodo(userId, newTodo)
       logger.info(`Successfully created a new todo item: ${newItem}`)
 
       return {
